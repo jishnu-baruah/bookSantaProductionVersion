@@ -27,6 +27,7 @@ export default class ReceiverDetailsScreen extends Component {
         }
     }
 
+
     getReceiverDetails = () => {
         db.collection('users').where("email_id", '==', this.state.receiverId).get()
             .then(snapshot => {
@@ -110,6 +111,18 @@ export default class ReceiverDetailsScreen extends Component {
 
     addNotification = () => {
         var message = this.state.userId + ' has shown interest in donating';
+
+        db.collection("all_notifications").add({
+            "targeted_user_id": this.state.recieverId,
+            "donor_id": this.state.userId,
+            "request_id": this.state.requestId,
+            "book_name": this.state.bookName,
+            "date": firebase.firestore.FieldValue.serverTimestamp(),
+            "notification_status": "unread",
+            "message": message
+        })
+
+
         Alert.alert(message)
     }
 
