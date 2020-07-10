@@ -49,7 +49,7 @@ export default class MyDonations extends Component {
 
     getAllDonations = () => {
         Alert.alert("I am being called")
-        this.requestRef = db.collection("all_donations").where('donor_id', '==', this.state.userId)
+        this.requestRef = db.collection("all_donations").where('donor_id', '==', this.state.donorId)
             .onSnapshot((snapshot) => {
                 var allDonations = snapshot.docs.map(document => document.data());
                 this.setState({
@@ -78,6 +78,7 @@ export default class MyDonations extends Component {
     }
 
     sendNotification = (bookDetails, requestStatus) => {
+        f
         var requestId = bookDetails.request_id;
         var donorId = bookDetails.donor_id;
         db.collection('all_notifications').where("request_id", '==', requestId).where('donor_id', '==', donorId)
@@ -113,8 +114,9 @@ export default class MyDonations extends Component {
                 rightElement={
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => { /*Alert.alert("Book Sent!!!")*/
-                            this.sendBook(item)
+                        onPress={() => {
+                            Alert.alert("Book Sent!!!")
+                            // this.sendBook(item)
                         }}
                     >
                         <Text style={{ color: '#ffff' }}>{item.request_status === "BookSent" ? "Book Sent" : "Send"}</Text>
